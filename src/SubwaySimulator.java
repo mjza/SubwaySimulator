@@ -1,7 +1,10 @@
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Date;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,19 +29,24 @@ public class SubwaySimulator {
 	public static void main(String[] args) {
 		// Parse the CSV file and store station information
 		try {
-			if(args.length > 0)
-				parseStations(args[0]);
+			int inIndex = Arrays.asList(args).indexOf("--in");
+			if(inIndex >= 0 )
+				parseStations(args[inIndex + 1]);
 			else
 				parseStations("./data/subway.csv");
 			// output folder 
-			if(args.length > 1)
-				output = args[1];
+			int outIndex = Arrays.asList(args).indexOf("--out");
+			if(outIndex >= 0)
+				output = args[outIndex + 1];
 			else
 				output = "./out/";
 			if(!output.endsWith("\\") && !output.endsWith("/")) {
 				output += "/";
 			}
+			Files.createDirectories(Paths.get(output));
 		} catch (CsvValidationException | NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		cleanOutput();

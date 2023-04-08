@@ -9,4 +9,4 @@ A Java program that models the movement of 12 trains on 3 subway lines. Here's a
 
 ## How to run?
 
-java -jar .\exe\SubwaySimulator.jar "..\data\subway.csv" "..\out"
+java -jar ".\exe\SubwaySimulator.jar" --in "..\data\subway.csv" --out "..\out"
